@@ -37,6 +37,31 @@ class SpritePreview(QMainWindow):
     def setupUI(self):
         # An application needs a central widget - often a QFrame
         frame = QFrame()
+        self.centralWidget(frame)
+        main_layout = QVBoxLayout
+
+        self.image_label = QLabel()
+        self.image_label.setPixmap(self.frames[0])
+        main_layout.addWidget(self.image_label)
+
+        fps_layout = QHBoxLayout
+        fps_label = QLabel("Frames per second:")
+        fps_layout.addWidget(fps_label)
+        self.fps_value = QLabel("30")
+        fps_layout.addWidget(self.fps_value)
+        main_layout.addLayout(fps_layout)
+
+        self.fps_slider = QSlider(Qt.Orientation.Horizontal)
+        self.fps_slider.setRange(1, 100)
+        self.fps_slider.setValue(30)
+        self.fps_slider.setTickInterval(10)
+        self.fps_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.fps_slider.valueChanged.connect(self.update_fps_label)
+        main_layout.addWidget(self.fps_slider)
+
+        self.start = QPushButton("Start")
+        main_layout.addWidget(self.start)
+        frame.setLayout(main_layout)
 
         # Add a lot of code here to make layouts, more QFrame or QWidgets, and
         # the other components of the program.
