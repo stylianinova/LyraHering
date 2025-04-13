@@ -85,8 +85,13 @@ class SpritePreview(QMainWindow):
         self.image_label.setPixmap(self.frames[self.frame_index])
 
     def start_animation(self):
-        fps = self.fps_slider.value()
-        self.timer.start(1000 // fps)
+        if self.timer.isActive():
+            self.timer.stop()
+            self.start.setText("Start")
+        else:
+            fps = self.fps_slider.value()
+            self.timer.start(1000 // fps)
+            self.start.setText("Stop")
 
 def main():
     app = QApplication([])
