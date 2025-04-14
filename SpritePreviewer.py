@@ -48,30 +48,36 @@ class SpritePreview(QMainWindow):
         self.image_label.setPixmap(self.frames[0])
         image_and_slider_layout.addWidget(self.image_label)
 
-        slider_layout = QHBoxLayout()
-
-        fps_label_layout = QHBoxLayout()
-        fps_label_text = QLabel("Frames per second:")
-        self.fps_value = QLabel("30")
-        fps_label_layout.addWidget(fps_label_text)
-        fps_label_layout.addWidget(self.fps_value)
-
-        slider_layout.addLayout(fps_label_layout)
-
         self.fps_slider = QSlider(Qt.Orientation.Vertical)
         self.fps_slider.setRange(1, 100)
         self.fps_slider.setValue(30)
         self.fps_slider.setTickInterval(10)
-        self.fps_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.fps_slider.setTickPosition(QSlider.TickPosition.TicksLeft)
         self.fps_slider.valueChanged.connect(self.update_fps_label)
-        slider_layout.addWidget(self.fps_slider)
 
-        image_and_slider_layout.addLayout(slider_layout)
+        image_and_slider_layout.addWidget(self.fps_slider)
         main_layout.addLayout(image_and_slider_layout)
+
+        fps_label_layout = QHBoxLayout()
+        fps_text = QLabel("Frames per second:")
+        self.fps_value = QLabel("30")
+        fps_label_layout.addWidget(fps_text)
+        fps_label_layout.addWidget(self.fps_value)
+        main_layout.addLayout(fps_label_layout)
 
         self.start = QPushButton("Start")
         self.start.clicked.connect(self.start_animation)
         main_layout.addWidget(self.start)
+
+        menubar = self.menuBar()
+        menubar.setNativeMenuBar(False)
+        file_menu = menubar.addMenu('&File')
+        pause = QAction("Pause", self)
+        pause.triggered.connect(self.pause)
+        file_menu.addAction(pause)
+        exit_action = QAction('&Exit', self)
+        exit_action.triggered.connect(QApplication.quit)
+        file_menu.addAction(exit_action)
 
         frame.setLayout(main_layout)
         self.setCentralWidget(frame)
@@ -100,6 +106,11 @@ class SpritePreview(QMainWindow):
             fps = self.fps_slider.value()
             self.timer.start(1000 // fps)
             self.start.setText("Stop")
+
+    def pause(self):
+        if self.timer.isActive():
+            self.timer.stop()
+            self.start.setText("Start")
 
 def main():
     app = QApplication([])
