@@ -49,8 +49,14 @@ class SpritePreview(QMainWindow):
         image_and_slider_layout.addWidget(self.image_label)
 
         slider_layout = QHBoxLayout()
-        fps_label = QLabel("Frames per second:")
-        slider_layout.addWidget(fps_label)
+
+        fps_label_layout = QHBoxLayout()
+        fps_label_text = QLabel("Frames per second:")
+        self.fps_value = QLabel("30")
+        fps_label_layout.addWidget(fps_label_text)
+        fps_label_layout.addWidget(self.fps_value)
+
+        slider_layout.addLayout(fps_label_layout)
 
         self.fps_slider = QSlider(Qt.Orientation.Vertical)
         self.fps_slider.setRange(1, 100)
@@ -59,9 +65,6 @@ class SpritePreview(QMainWindow):
         self.fps_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.fps_slider.valueChanged.connect(self.update_fps_label)
         slider_layout.addWidget(self.fps_slider)
-
-        self.fps_value = QLabel("30")
-        slider_layout.addWidget(self.fps_value)
 
         image_and_slider_layout.addLayout(slider_layout)
         main_layout.addLayout(image_and_slider_layout)
