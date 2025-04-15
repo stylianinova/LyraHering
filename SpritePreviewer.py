@@ -8,8 +8,6 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
-# This function loads a series of sprite images stored in a folder with a
-# consistent naming pattern: sprite_# or sprite_##. It returns a list of the images.
 def load_sprite(sprite_folder_name, number_of_frames):
     frames = []
     padding = math.ceil(math.log(number_of_frames - 1, 10))
@@ -24,22 +22,17 @@ class SpritePreview(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sprite Animation Preview")
-        # This loads the provided sprite and would need to be changed for your own.
         self.num_frames = 21
         self.frames = load_sprite('spriteImages',self.num_frames)
         self.frame_index = 0
 
-        # Add any other instance variables needed to track information as the program
-        # runs here
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frame)
 
-        # Make the GUI in the setupUI method
         self.setupUI()
 
 
     def setupUI(self):
-        # An application needs a central widget - often a QFrame
         frame = QFrame()
         main_layout = QVBoxLayout()
 
@@ -83,13 +76,6 @@ class SpritePreview(QMainWindow):
         frame.setLayout(main_layout)
         self.setCentralWidget(frame)
 
-        # Add a lot of code here to make layouts, more QFrame or QWidgets, and
-        # the other components of the program.
-        # Create needed connections between the UI components and slot methods
-        # you define in this class.
-
-
-    # You will need methods in the class to act as slots to connect to signals
     def update_fps_label(self):
         fps = self.fps_slider.value()
         self.fps_value.setText(str(fps))
