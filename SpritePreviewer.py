@@ -102,9 +102,7 @@ class SpritePreview(QMainWindow):
 
 def main():
     app = QApplication([])
-    # Create our custom application
     window = SpritePreview()
-    # And show it
     window.show()
     app.exec()
 
