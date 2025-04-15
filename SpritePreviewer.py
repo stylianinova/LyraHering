@@ -43,7 +43,8 @@ class SpritePreview(QMainWindow):
         image_and_slider_layout.addWidget(self.image_label)
 
         self.fps_slider = QSlider(Qt.Orientation.Vertical)
-        self.fps_slider.setRange(1, 100)
+        self.fps_slider.setMinimum(1)
+        self.fps_slider.setMaximum(100)
         self.fps_slider.setValue(30)
         self.fps_slider.setTickInterval(10)
         self.fps_slider.setTickPosition(QSlider.TickPosition.TicksLeft)
